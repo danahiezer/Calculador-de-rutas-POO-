@@ -3,7 +3,7 @@ class Mapa:
 
     def __init__(self):
         self.filas = 0
-        self.columnas = 0
+        self.columnas = 0 # constructor
         self.matriz = []
 
     def crear_matriz(self,filas, columnas):
