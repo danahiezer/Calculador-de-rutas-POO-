@@ -46,9 +46,8 @@ class Mapa:
         if colocados < cantidad:
             print(f"se coloco{colocados} obstaculo: '{tipo}' de {cantidad}")
 
-    def colocar_obstaculo_aleatorio(
-        self, cantidad_P, cantidad_A, cantidad_T
-    ):  # metodo para visualizar los obstaculos
+    def colocar_obstaculo_aleatorio(self, cantidad_P, cantidad_A, cantidad_T):  # metodo para visualizar los obstaculos
+
         self.colocar_obstaculo("X", cantidad_P)
         self.colocar_obstaculo("A", cantidad_A)
         self.colocar_obstaculo("T", cantidad_T)
@@ -60,7 +59,7 @@ class Mapa:
 
 class CalculadorDeRuta(Mapa):
 
-    def es_posicion_valida(self, fila, columna, permitir_agua=False):
+    def es_posicion_valida(self, fila, columna, permitir_agua=False): # metodo donde validamos las posiciones
 
         if fila < 0 or fila >= self.filas or columna < 0 or columna >= self.columnas:
             return False
@@ -72,7 +71,7 @@ class CalculadorDeRuta(Mapa):
             return False
         return True
 
-    def buscador_bfs(self, inicio, fin, permitir_agua=False):
+    def buscador_bfs(self, inicio, fin, permitir_agua=False): # metodo donde implementamos algoritmo de busqueda
 
         cola = deque()
         cola.append((inicio[0], inicio[1], [inicio]))
@@ -109,7 +108,7 @@ class CalculadorDeRuta(Mapa):
 
         return None
 
-    def mejor_camino(self, inicio, fin):
+    def mejor_camino(self, inicio, fin): # metodo donde toma la decision del mejor camino dependiendo de ciertas condiciones
 
         camino = self.buscador_bfs(inicio, fin, permitir_agua=False)
         if camino:
@@ -124,7 +123,7 @@ class CalculadorDeRuta(Mapa):
         print("no hay caminos posibles")
         return (None, False)
 
-    def marcar_camino(self, camino):
+    def marcar_camino(self, camino): # metodo donde marca el camino recorrido dependiendo de la opcion que tomo
         copia_lab = [f[:] for f in self.matriz]
 
         for fil, colum in camino:
