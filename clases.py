@@ -62,8 +62,8 @@ class CalculadorDeRuta(Mapa):
 
     def es_posicion_valida(self, fila, columna, permitir_agua=False):
 
-        if 0 >= fila < self.filas and 0 >= columna < self.columnas:
-            return True
+        if fila < 0 or fila >= self.filas or columna < 0 or columna >= self.columnas:
+            return False
         celda = self.matriz[fila][columna]
 
         if celda == "X" or celda == "T":
@@ -126,9 +126,12 @@ class CalculadorDeRuta(Mapa):
 
     def marcar_camino(self, camino):
         copia_lab = [f[:] for f in self.matriz]
+
         for fil, colum in camino:
-            if (fil, colum) != "E" and (fil, colum) != "S":
-                if (fil, colum) == "A":
+            celda_actual = copia_lab[fil][colum]
+
+            if celda_actual != "E" and celda_actual != "S":
+                if celda_actual == "A":
                     copia_lab[fil][colum] = "~"
                 else:
                     copia_lab[fil][colum] = "*"
@@ -157,8 +160,21 @@ def bucle():
     cant_tempo = int(input("cantidad de temporal:"))
     buscador.colocar_obstaculo_aleatorio(cant_paredes, cant_agua, cant_tempo)
 
-    buscador.mostrar_matriz()
-    buscador.buscador_bfs()
+    camino,uso_agua = buscador.mejor_camino(inicio,fin)
+
+    if camino:
+        matriz_con_camino = buscador.marcar_camino(camino)
+
+        for fila in matriz_con_camino:
+            print(" ".join(fila))
+        if uso_agua:
+            print("uso agua")
+        else:
+            print("camino libre")
+
+    else:
+        print("no hay camino valido")
+
 
 
 bucle()
